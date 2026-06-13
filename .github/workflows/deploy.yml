@@ -19,7 +19,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Login to SWR
-      run: echo "${{ secrets.SWR_SK }}" | docker login -u "cn-north-4@${{ secrets.SWR_AK }}" --password-stdin swr.cn-north-4.myhuaweicloud.com
+      run: echo ${{ secrets.SWR_SK }} | docker login -u cn-north-4@${{ secrets.SWR_AK }} --password-stdin swr.cn-north-4.myhuaweicloud.com
 
     - name: Build and push backend image
       uses: docker/build-push-action@v4
