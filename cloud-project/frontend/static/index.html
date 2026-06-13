@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>云计算课程设计</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        h1 { margin-bottom: 20px; }
+        p { margin: 10px 0; font-size: 18px; }
+        .status {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>☁️ 云计算课程设计</h1>
+        <p><strong>学号:</strong> 2023112447</p>
+        <p><strong>姓名:</strong> 闫硕</p>
+        <p><strong>班级:</strong> 计算机2班</p>
+        <div class="status">
+            <p>后端状态: <span id="status">检测中...</span></p>
+        </div>
+    </div>
+    <script>
+        fetch('/api/ping')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('status').textContent = '✅ ' + data.status;
+                document.getElementById('status').style.color = '#4ade80';
+            })
+            .catch(error => {
+                document.getElementById('status').textContent = '❌ 连接失败';
+                document.getElementById('status').style.color = '#f87171';
+            });
+    </script>
+</body>
+</html>

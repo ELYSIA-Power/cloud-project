@@ -1,0 +1,5 @@
+offline package/
+*.tar
+*.7z
+*.docx
+*.pdf

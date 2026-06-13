@@ -1,0 +1,52 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  REGISTRY: swr.cn-north-4.myhuaweicloud.com
+  ORG: cloud-project231
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Login to SWR
+      uses: docker/login-action@v2
+      with:
+        registry: swr.cn-north-4.myhuaweicloud.com
+        username: ${{ secrets.SWR_AK }}
+        password: ${{ secrets.SWR_SK }}
+
+    - name: Build and push backend image
+      uses: docker/build-push-action@v4
+      with:
+        context: ./cloud-project/backend
+        push: true
+        tags: |
+          ${{ env.REGISTRY }}/${{ env.ORG }}/backend:${{ github.sha }}
+          ${{ env.REGISTRY }}/${{ env.ORG }}/backend:latest
+
+    - name: Build and push frontend image
+      uses: docker/build-push-action@v4
+      with:
+        context: ./cloud-project/frontend
+        push: true
+        tags: |
+          ${{ env.REGISTRY }}/${{ env.ORG }}/frontend:${{ github.sha }}
+          ${{ env.REGISTRY }}/${{ env.ORG }}/frontend:latest
+
+    - name: Update Kubernetes Deployment
+      uses: steebchen/kubectl@v2.0.0
+      with:
+        config: ${{ secrets.KUBE_CONFIG }}
+        command: |
+          set image deployment/backend backend=${{ env.REGISTRY }}/${{ env.ORG }}/backend:${{ github.sha }}
+          set image deployment/frontend frontend=${{ env.REGISTRY }}/${{ env.ORG }}/frontend:${{ github.sha }}
