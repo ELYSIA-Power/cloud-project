@@ -18,8 +18,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    # 替换你原本报错的 Login 步骤
     - name: Login to SWR
-      run: docker login -u cn-north-4@HST3WWQEA43CJFJ6MLO4 -p 04c4dc2d7569f47ad11572169d56152bd009bd241e66f254082d6e61e1761bdf swr.cn-north-4.myhuaweicloud.com
+      run: |
+        docker login -u ${{ secrets.SWR_USERNAME }} -p ${{ secrets.SWR_PASSWORD }} swr.cn-north-4.myhuaweicloud.com
 
     - name: Build and push backend image
       uses: docker/build-push-action@v4
