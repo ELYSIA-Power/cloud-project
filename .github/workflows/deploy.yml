@@ -18,14 +18,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # 替换你原本报错的 Login 步骤
-    # 替换原本的 - name: Login to SWR 步骤
+    
     - name: Log in to Huawei Cloud SWR
-      uses: docker/login-action@v2
-      with:
-        registry: swr.cn-north-4.myhuaweicloud.com
-        username: ${{ secrets.SWR_USERNAME }}
-        password: ${{ secrets.SWR_PASSWORD }}
+      uses: docker login -u cn-north-4@HPUANCTQSVJUAA8M0RUC -p 7390925dd081f5b488329361c1cb37c70928b05b6a0c6a9984d6e83a21a557d8 swr.cn-north-4.myhuaweicloud.com
         
     - name: Build and push backend image
       uses: docker/build-push-action@v4
