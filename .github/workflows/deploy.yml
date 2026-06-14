@@ -25,7 +25,7 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         context: ./cloud-project/backend
-        file: ./cloud-project/backend/Dockerfile.backend
+        file: Dockerfile.backend
         push: true
         tags: |
           ${{ env.REGISTRY }}/${{ env.ORG }}/backend:${{ github.sha }}
@@ -35,7 +35,7 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         context: ./cloud-project/frontend
-        file: ./cloud-project/frontend/Dockerfile.frontend
+        file: Dockerfile.frontend
         push: true
         tags: |
           ${{ env.REGISTRY }}/${{ env.ORG }}/frontend:${{ github.sha }}
