@@ -21,7 +21,7 @@ jobs:
     # 替换你原本报错的 Login 步骤
     - name: Login to SWR
       run: |
-        docker login -u ${{ secrets.SWR_USERNAME }} -p ${{ secrets.SWR_PASSWORD }} swr.cn-north-4.myhuaweicloud.com
+        docker login -u "${{ secrets.SWR_USERNAME }}" -p "${{ secrets.SWR_PASSWORD }}" swr.cn-north-4.myhuaweicloud.com
 
     - name: Build and push backend image
       uses: docker/build-push-action@v4
